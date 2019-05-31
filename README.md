@@ -9,7 +9,7 @@ Easy to use API for performing requests to the Grammarly API for checking your g
 # Usage
 
 1. [Obtain the API key](https://www.grammarbot.io/signup)
-2. Use the library (TBA).
+2. Use the library:
 
 ```rust,no_run
 fn main() {
