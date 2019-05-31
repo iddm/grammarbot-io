@@ -25,5 +25,5 @@ optional = true
 version = "0.9"
 
 [features]
-default = []
+default = ["client"]
 client = ["reqwest"]
