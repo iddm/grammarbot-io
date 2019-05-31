@@ -3,9 +3,19 @@ name = "grammarly"
 version = "0.1.0"
 authors = ["Victor Polevoy <fx@thefx.co>"]
 edition = "2018"
+description = """
+This crate allows you to check your texts for grammar using the grammarly service. """
+repository = "https://github.com/vityafx/grammarly-rs"
+documentation = "https://docs.rs/grammarly/"
+readme = "README.md"
+license = "MIT"
+keywords = ["grammar", "english", "api", "request", "language"]
+categories = ["api-bindings"]
+
+[badges]
+travis-ci = { repository = "vityafx/grammarly-rs" }
 
 [dependencies]
-#failure = "0.1"
 error-chain = "0.12"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
