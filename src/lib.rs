@@ -10,24 +10,30 @@
 //!
 //! # Usage
 //!
-//! ```rust,no_run
-//! fn main() {
-//!     let string = "Hello this grammarly world!";
-//!     let mut r = grammarly::Request::from(string);
-//!     // With an API key:
-//!     println!("Response: {:#?}", r.api_key("99999999").send());
-//!     // Without an API key:
-//!     println!("Response: {:#?}", r.send());
-//! }
-//! ```
-
+#![cfg_attr(
+    feature = "client",
+    doc = "
+```rust,no_run
+fn main() {
+    let string = \"Hello this grammarly world!\";
+    let mut r = grammarly::Request::from(string);
+    // With an API key:
+    println!(\"Response: {:#?}\", r.api_key(\"99999999\").send());
+    // Without an API key:
+    println!(\"Response: {:#?}\", r.send());
+}
+```"
+)]
 #![deny(missing_docs)]
 #![deny(warnings)]
 
+#[cfg(feature = "client")]
+/// The client feature implementation.
+pub mod client;
 /// The request structures.
 pub mod request;
 /// The response structures.
 pub mod response;
 
-pub use request::Request;
+pub use request::{HttpRequest, HttpRequestMethod, Request};
 pub use response::Response;

@@ -1,7 +1,7 @@
 //! The grammarly request.
 
 /// The URL to send the requests to.
-pub static GRAMMARLY_CHECK_URL: &'static str = "http://api.grammarbot.io/v2/check";
+pub const GRAMMARLY_CHECK_URL: &str = "http://api.grammarbot.io/v2/check";
 
 /// Grammarly's api key strong type.
 #[derive(Debug, Default, Clone, serde::Serialize)]
@@ -70,33 +70,49 @@ impl Request {
         self
     }
 
-    /// Sets the language to check grammar for.
+    /// Mutates the object setting the language to check grammar for.
     pub fn language<T: Into<Language>>(&mut self, language: T) -> &mut Request {
         self.language = language.into();
         self
     }
 }
 
-#[cfg(feature = "client")]
-impl Request {
-    /// Sends the request and returns the response using default client.
-    pub fn send(&self) -> Result<crate::response::Response, reqwest::Error> {
-        self.send_with_client(&reqwest::Client::new())
-    }
+/// An HTTP method.
+#[derive(Debug, Clone)]
+pub enum HttpRequestMethod {
+    /// GET HTTP method.
+    Get,
+    /// POST HTTP method.
+    Post,
+}
 
-    /// Sends the request using the provided client.
-    pub fn send_with_client(
-        &self,
-        client: &reqwest::Client,
-    ) -> Result<crate::response::Response, reqwest::Error> {
-        client
-            .get(GRAMMARLY_CHECK_URL)
-            .query(&[
-                ("api_key", self.api_key.0.clone()),
-                ("language", self.language.to_short_string().to_owned()),
-                ("text", self.text.clone()),
-            ])
-            .send()?
-            .json()
+/// The http request object. Used to pack grammarly request so that
+/// it can be used to send requests from other request crates (`reqwest`/`hyper`/etc).
+/// The main use case is when the library is built without the `client` feature, so
+/// you still can perform requests using your own implementation.
+#[derive(Debug, Clone)]
+pub struct HttpRequest {
+    /// Request URL.
+    pub url: String,
+    /// HTTP request method type.
+    pub method: HttpRequestMethod,
+    /// Key-value pairs of the request data.
+    pub values: Vec<(String, String)>,
+}
+
+impl From<&Request> for HttpRequest {
+    fn from(r: &Request) -> HttpRequest {
+        HttpRequest {
+            url: GRAMMARLY_CHECK_URL.to_owned(),
+            method: HttpRequestMethod::Get,
+            values: vec![
+                ("api_key".to_owned(), r.api_key.0.clone()),
+                (
+                    "language".to_owned(),
+                    r.language.to_short_string().to_owned(),
+                ),
+                ("text".to_owned(), r.text.clone()),
+            ],
+        }
     }
 }

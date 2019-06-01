@@ -24,7 +24,11 @@ fn main() {
 
 # Features
 The crate contains the only one feature: **client** which currently uses
-`reqwest` crate to perform requests.
+`reqwest` crate to perform requests. If you don't want to use this feature,
+or you don't want the crate to fetch the network-related dependencies and link
+against them, you may perform the requests yourself, using the `HttpRequest`
+structure, which contains all necessary information to perform the request, and
+can be easily created from the `grammarly::Request` object.
 
 # License
 [This project is licensed under the MIT license.](LICENSE)
