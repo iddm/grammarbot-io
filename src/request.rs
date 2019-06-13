@@ -7,7 +7,10 @@ pub const GRAMMARLY_CHECK_URL: &str = "http://api.grammarbot.io/v2/check";
 #[derive(Debug, Default, Clone, serde::Serialize)]
 pub struct ApiKey(pub String);
 
-impl<T> From<T> for ApiKey where T: AsRef<str> {
+impl<T> From<T> for ApiKey
+where
+    T: AsRef<str>,
+{
     fn from(s: T) -> ApiKey {
         ApiKey(s.as_ref().to_owned())
     }
@@ -53,7 +56,10 @@ pub struct Request {
     language: Language,
 }
 
-impl<T> From<T> for Request where T: AsRef<str> {
+impl<T> From<T> for Request
+where
+    T: AsRef<str>,
+{
     fn from(s: T) -> Request {
         Request {
             text: s.as_ref().to_owned(),
