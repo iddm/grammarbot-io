@@ -6,12 +6,6 @@ matrix:
         - rust: stable
 
 sudo: false
-
-cache:
-    apt: true
-    directories:
-        - $TRAVIS_BUILD_DIR/target
-        - $HOME/.cargo
          
 before_script:
   - export PATH="$PATH:$HOME/.cargo/bin"
