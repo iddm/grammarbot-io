@@ -17,9 +17,31 @@ fn main() {
     let mut r = grammarly::Request::from(string);
     // With an API key:
     println!("Response: {:#?}", r.api_key("99999999").send());
-    // Without an API key:
-    println!("Response: {:#?}", r.send());
 }
+```
+
+# Examples
+You may run an example which uses an environment variable `API_KEY`:
+
+```rust,no_run
+fn main() {
+    use std::env;
+
+    let string = "Hello this grammarly world!";
+    let mut r = grammarly::Request::from(string);
+    // With an API key:
+    println!(
+        "Response: {:#?}",
+        r.api_key(env::var("API_KEY").expect("The API_KEY variable should be set."))
+            .send()
+    );
+}
+```
+
+by running
+
+```
+API_KEY=<YOUR API KEY> cargo run --example run_with_env
 ```
 
 # Features

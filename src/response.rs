@@ -104,15 +104,24 @@ pub struct Match {
     // TODO specify other fields...
 }
 
-/// Grammarly's main response structure.
-#[derive(Debug, Default, Clone, serde::Deserialize)]
-pub struct Response {
-    /// Grammarly bot information.
-    pub software: Software,
-    /// Grammarly bot warnings.
-    pub warnings: Warnings,
-    /// Language information.
-    pub language: LanguageDetails,
-    /// Problems found.
-    pub matches: Vec<Match>,
+/// Grammarly's response structure.
+#[derive(Debug, Clone, serde::Deserialize)]
+#[serde(untagged)]
+pub enum Response {
+    /// A successful response.
+    Success {
+        /// Grammarly bot information.
+        software: Software,
+        /// Grammarly bot warnings.
+        warnings: Warnings,
+        /// Language information.
+        language: LanguageDetails,
+        /// Problems found.
+        matches: Vec<Match>,
+    },
+    /// Not a successful response.
+    Failure {
+        /// Contains text explaining the problem.
+        message: String,
+    },
 }

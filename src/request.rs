@@ -1,7 +1,7 @@
 //! The grammarly request.
 
 /// The URL to send the requests to.
-pub const GRAMMARLY_CHECK_URL: &str = "http://api.grammarbot.io/v2/check";
+pub const GRAMMARLY_CHECK_URL: &str = "https://grammarbot.p.rapidapi.com/check";
 
 /// Grammarly's api key strong type.
 #[derive(Debug, Default, Clone, serde::Serialize)]
@@ -48,12 +48,20 @@ impl Default for Language {
     }
 }
 
+/// The request data. Used to send data to the service.
+#[derive(Debug, Default, Clone, serde::Serialize)]
+pub struct RequestData {
+    /// The language we need to check for.
+    pub language: String,
+    /// The text we are sending to the service for checking.
+    pub text: String,
+}
+
 /// The request object. Used to send data to the service.
 #[derive(Debug, Default, Clone, serde::Serialize)]
 pub struct Request {
     api_key: ApiKey,
-    text: String,
-    language: Language,
+    data: RequestData,
 }
 
 impl<T> From<T> for Request
@@ -62,7 +70,10 @@ where
 {
     fn from(s: T) -> Request {
         Request {
-            text: s.as_ref().to_owned(),
+            data: RequestData {
+                text: s.as_ref().to_owned(),
+                ..Default::default()
+            },
             ..Default::default()
         }
     }
@@ -78,18 +89,9 @@ impl Request {
 
     /// Mutates the object setting the language to check grammar for.
     pub fn language<T: Into<Language>>(&mut self, language: T) -> &mut Request {
-        self.language = language.into();
+        self.data.language = language.into().to_short_string().to_owned();
         self
     }
-}
-
-/// An HTTP method.
-#[derive(Debug, Clone)]
-pub enum HttpRequestMethod {
-    /// GET HTTP method.
-    Get,
-    /// POST HTTP method.
-    Post,
 }
 
 /// The http request object. Used to pack grammarly request so that
@@ -100,25 +102,25 @@ pub enum HttpRequestMethod {
 pub struct HttpRequest {
     /// Request URL.
     pub url: String,
-    /// HTTP request method type.
-    pub method: HttpRequestMethod,
+    /// Key-value pairs of the request headers.
+    pub headers: Vec<(String, String)>,
     /// Key-value pairs of the request data.
-    pub values: Vec<(String, String)>,
+    pub data: RequestData,
 }
 
 impl From<&Request> for HttpRequest {
     fn from(r: &Request) -> HttpRequest {
         HttpRequest {
             url: GRAMMARLY_CHECK_URL.to_owned(),
-            method: HttpRequestMethod::Get,
-            values: vec![
-                ("api_key".to_owned(), r.api_key.0.clone()),
+            headers: vec![
                 (
-                    "language".to_owned(),
-                    r.language.to_short_string().to_owned(),
+                    "x-rapidapi-host".to_owned(),
+                    "grammarbot.p.rapidapi.com".to_owned(),
                 ),
-                ("text".to_owned(), r.text.clone()),
+                ("x-rapidapi-key".to_owned(), r.api_key.0.clone()),
+                ("useQueryString".to_owned(), "true".to_owned()),
             ],
+            data: r.data.clone(),
         }
     }
 }

@@ -35,5 +35,5 @@ pub mod request;
 /// The response structures.
 pub mod response;
 
-pub use request::{HttpRequest, HttpRequestMethod, Request};
+pub use request::{HttpRequest, Request};
 pub use response::Response;

@@ -1,4 +1,4 @@
-use crate::{HttpRequest, HttpRequestMethod, Request};
+use crate::{HttpRequest, Request};
 
 impl Request {
     /// Sends the request and returns the response using default client.
@@ -26,27 +26,10 @@ impl HttpRequest {
         &self,
         client: &reqwest::blocking::Client,
     ) -> Result<crate::response::Response, reqwest::Error> {
-        let request = match self.method {
-            HttpRequestMethod::Get => client.get(&self.url).query(&self.values),
-            HttpRequestMethod::Post => unimplemented!(),
-        };
-        request.send()?.json()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_request_without_api_key() {
-        assert!(
-            super::Request::from("Hello this grammarly world!")
-                .send()
-                .unwrap()
-                .software
-                .version
-                .0
-                .len()
-                > 0
-        );
+        let mut request = client.post(&self.url);
+        for (k, v) in &self.headers {
+            request = request.header(k, v);
+        }
+        request.form(&self.data).send()?.json()
     }
 }
