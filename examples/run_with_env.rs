@@ -2,7 +2,7 @@ fn main() {
     use std::env;
 
     let string = "Hello this grammarly world!";
-    let mut r = grammarly::Request::from(string);
+    let mut r = grammarbot_io::Request::from(string);
     // With an API key:
     println!(
         "Response: {:#?}",

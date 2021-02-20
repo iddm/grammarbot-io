@@ -1,7 +1,7 @@
-//! Grammarly crate - check your sentence for grammar.
+//! GrammarBot crate - check your sentence for grammar.
 //!
 //! This crate uses [official API](https://www.grammarbot.io/) of
-//! [the grammarly service](http://grammarly.com/).
+//! [the GrammarBot service](http://grammarbot.io/).
 //!
 //! The service has rate limits:
 //! As of this moment:
@@ -15,8 +15,8 @@
     doc = "
 ```rust,no_run
 fn main() {
-    let string = \"Hello this grammarly world!\";
-    let mut r = grammarly::Request::from(string);
+    let string = \"Hello this GrammarBot world!\";
+    let mut r = grammarbot_io::Request::from(string);
     // With an API key:
     println!(\"Response: {:#?}\", r.api_key(\"99999999\").send());
     // Without an API key:

@@ -1,19 +1,19 @@
 [package]
-name = "grammarly"
-version = "0.3.1"
+name = "grammarbot-io"
+version = "1.0.0"
 authors = ["Victor Polevoy <fx@thefx.co>"]
 edition = "2018"
 description = """
-This crate allows you to check your texts for grammar using the grammarly service. """
-repository = "https://github.com/vityafx/grammarly-rs"
-documentation = "https://docs.rs/grammarly/"
+This crate allows you to check your texts for grammar using the grammarbot service. """
+repository = "https://github.com/vityafx/grammarbot-io"
+documentation = "https://docs.rs/grammarbot-io/"
 readme = "README.md"
 license = "MIT"
 keywords = ["grammar", "english", "api", "request", "language"]
 categories = ["api-bindings"]
 
 [badges]
-travis-ci = { repository = "vityafx/grammarly-rs" }
+travis-ci = { repository = "vityafx/grammarbot-io" }
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
