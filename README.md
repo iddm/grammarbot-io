@@ -1,4 +1,4 @@
-[![Build status](https://api.travis-ci.com/vityafx/grammarbot-io.svg?branch=master)](https://travis-ci.com/vityafx/grammarbot-io)
+[![Build status](https://api.travis-ci.com/iddm/grammarbot-io.svg?branch=master)](https://travis-ci.com/iddm/grammarbot-io)
 [![Crates](https://img.shields.io/crates/v/grammarbot-io.svg)](https://crates.io/crates/grammarbot-io)
 [![Docs](https://docs.rs/grammarbot-io/badge.svg)](https://docs.rs/grammarbot-io)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)

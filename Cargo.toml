@@ -5,15 +5,12 @@ authors = ["Victor Polevoy <fx@thefx.co>"]
 edition = "2018"
 description = """
 This crate allows you to check your texts for grammar using the grammarbot service. """
-repository = "https://github.com/vityafx/grammarbot-io"
+repository = "https://github.com/iddm/grammarbot-io"
 documentation = "https://docs.rs/grammarbot-io/"
 readme = "README.md"
 license = "MIT"
 keywords = ["grammar", "english", "api", "request", "language"]
 categories = ["api-bindings"]
-
-[badges]
-travis-ci = { repository = "vityafx/grammarbot-io" }
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
